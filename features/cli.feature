@@ -224,7 +224,7 @@ Scenario: run a single failing feature
       };
       module.exports = cucumberSteps;
       """
-	And a file named "features/support/hooks.js" with:
+    And a file named "features/support/hooks.js" with:
       """
       var hooks = function() {
         this.registerHandler('AfterFeatures', function (event, callback) {
@@ -248,8 +248,7 @@ Scenario: run a single failing feature
       1 scenario (1 failed)
       1 step (1 failed)
       """
-	And it should exit with code "1"
-
+    And the exit status should be 1
 
   Scenario: run a single feature without step definitions with the strict mode flag
     Given a file named "features/a.feature" with:
@@ -259,7 +258,7 @@ Scenario: run a single failing feature
           When a step is undefined
       """
     When I run `cucumber.js features/a.feature --strict`
-    Then it should fail with:
+    Then it outputs this text:
       """
       U
 
@@ -274,6 +273,7 @@ Scenario: run a single failing feature
       });
 
       """
+    And the exit status should be 1
 
 
   Scenario: run a single feature with a pending step definition with the strict mode flag
@@ -291,7 +291,7 @@ Scenario: run a single failing feature
       module.exports = cucumberSteps;
       """
     When I run `cucumber.js features/a.feature --strict`
-    Then it should fail with:
+    Then it outputs this text:
       """
       P
 
@@ -299,6 +299,7 @@ Scenario: run a single failing feature
       1 step (1 pending)
 
       """
+    And the exit status should be 1
 
   Scenario: run a single feature without step definitions with the strict mode flag (short flag)
     Given a file named "features/a.feature" with:
@@ -308,7 +309,7 @@ Scenario: run a single failing feature
             When a step is undefined
       """
     When I run `cucumber.js features/a.feature -S`
-    Then it should fail with:
+    Then it outputs this text:
       """
       U
 
@@ -323,7 +324,7 @@ Scenario: run a single failing feature
       });
 
       """
-
+    And the exit status should be 1
 
   Scenario: run a single feature with a pending step definition with the strict mode flag (short flag)
     Given a file named "features/a.feature" with:
@@ -340,7 +341,7 @@ Scenario: run a single failing feature
       module.exports = cucumberSteps;
       """
     When I run `cucumber.js features/a.feature -S`
-    Then it should fail with:
+    Then it outputs this text:
       """
       P
 
@@ -348,4 +349,4 @@ Scenario: run a single failing feature
       1 step (1 pending)
 
       """
-	And the exit status should be 1
+    And the exit status should be 1
